@@ -25,18 +25,25 @@ void mini_printf(char *text) {
 
     // la partie suivante renvien à faire: printf("\n%s\n", text);
 
-    for(int i=0; i <= mini_strlen(text); i++) {
-        if(text[i] == '\n' || Index  == BUF_SIZE) {
+    int i;
+    for(i = 0; text[i] != '\0'; i++) {
+        if(text[i] == '\n' || Index == BUF_SIZE) {
             
-            write(1, buffer, Index );/*STDOUT_FILENO = 1 */
-            while(Index  >= 0) {
-                buffer[Index --] = '\0';
+            if(text[i] == '\n') {
+                buffer[Index++] = text[i];
             }
-            Index  = 0;
-        }
 
-        else buffer[Index ++] = text[i++];
+            write(1, buffer, Index);
+            for(int j = 0; j < Index; j++) {
+                buffer[j] = '\0';
+            }
+            Index = 0;
+        }
+        else {
+            buffer[Index++] = text[i];
+        }
     }
+
 }
 //--------
 int mini_scanf(char *buffer, int size_buffer) {

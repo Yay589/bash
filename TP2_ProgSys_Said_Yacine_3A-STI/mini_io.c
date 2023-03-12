@@ -54,6 +54,7 @@ struct MYFILE *mini_fopen(char *file, char mode) {
         stop_Io("ERROR: DESCRIPTEUR DE FICHIER \n",EXIT_FAILURE);
         break;
     }
+    
 
     struct MYFILE* myFile = mini_calloc(sizeof(struct MYFILE), 1);
     myFile->fd = descripteur_de_fichier;
@@ -73,6 +74,41 @@ struct MYFILE *mini_fopen(char *file, char mode) {
     }
 
     return myFile;
+}
+
+int mini_fclose(struct MYFILE* fichier) {
+
+    // Fermer le fichier
+    if(close(fichier->fd) == -1) {
+        return -1;
+    }
+    // Vider le buffer de sortie
+    mini_fflush(fichier);
+
+
+    // Parcourir file_list pour trouver le fichier, puis le supprimer de file_list
+    struct FILE_elm_list* file = file_list;
+    struct FILE_elm_list* file_precedant;
+
+    if(file != NULL && file->file->fd == fichier->fd) {
+        file_list = file_list->next;
+        mini_free(file);
+        return 0;
+    }
+
+    while(file != NULL && file->file->fd != fichier->fd){
+        file_precedant = file;
+        file = file->next;
+    }
+
+    if(file == NULL) {
+        mini_perror("mini_fclose : le fichier n'existe pas dans la liste des fichiers");
+    }
+
+    file_precedant->next = file->next;
+    mini_free(file);
+
+    return 0;
 }
 
 int mini_fread(void *buffer, int size_element, int number_element, struct MYFILE *file) {
@@ -167,7 +203,7 @@ MYFILE* mini_touch(char *file_name) {
     MYFILE* file = mini_calloc(sizeof(struct MYFILE), 1);
     int fd;
 
-    if((fd = open((char*)file, O_RDWR| O_CREAT,0666)) == -1) {
+    if((fd = open((char*)file_name, O_RDWR| O_CREAT,0666)) == -1) {
         mini_perror("error create file");
         _Exit(1);
     }

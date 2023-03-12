@@ -56,9 +56,13 @@ void *mini_calloc (int size_element, int number_element){
 
 /*mini free malloc */
 void mini_free(void*ptr){
+    printf("\n****mini_free****\n");
+
     struct malloc_element *ptr_molloc_list=molloc_list;
-    while ((ptr_molloc_list->zone= ptr) && ptr_molloc_list !=NULL)
-    {ptr_molloc_list->statut=0;}
+    while (ptr_molloc_list !=NULL){   
+        if((ptr_molloc_list->zone= ptr)) ptr_molloc_list->statut=0;
+        ptr_molloc_list=ptr_molloc_list->next_malloc;
+    }
 }
 //--------
 void mini_exit(int EXIT_VALUE) {
