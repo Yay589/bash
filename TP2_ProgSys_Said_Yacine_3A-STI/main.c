@@ -2,13 +2,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-void test_mini_memory();
-
-void test_mini_string();
-
-void test_mini_io();
-
-
 
 /* ========================================= tester les fonction ============================== */
 
@@ -68,5 +61,14 @@ void test_mini_string() {
 
     mini_exit_string();
 
+}
+int main(int argc, char const *argv[]){
+    void test_mini_memory();
+
+    void test_mini_string();
+
+    void test_mini_io();
+    
+    return 0;
 }
 
