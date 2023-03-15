@@ -26,32 +26,32 @@ void test_mini_memory()
 
 void test_mini_io()
 {
-    // printf("\n****test_mini_io****\n");
+    printf("\n****test_mini_io****\n");
 
-    // /*Combine mini_read mini_write to test*/
-    // mini_touch("text.txt");
-    // struct MYFILE *rw_file = mini_fopen("text.txt", 'b');
-    // char buffer_to_write[] = "INSA CVL";
-    // mini_fwrite(buffer_to_write, sizeof(char), sizeof(buffer_to_write) - 1, rw_file);
-    // mini_fflush(rw_file);
+    /*Combine mini_read mini_write to test*/
+    mini_touch("text.txt");
+    struct MYFILE *rw_file = mini_fopen("text.txt", 'b');
+    char buffer_to_write[] = "INSA CVL";
+    mini_fwrite(buffer_to_write, sizeof(char), sizeof(buffer_to_write) - 1, rw_file);
+    mini_fflush(rw_file);
 
-    // rw_file = mini_fopen("text.txt", 'b');
+    rw_file = mini_fopen("text.txt", 'b');
 
-    // char *buffer_to_read = mini_calloc(sizeof(char), sizeof(buffer_to_write));
-    // mini_fread(buffer_to_read, sizeof(char), sizeof(buffer_to_write) - 1, rw_file);
-    // mini_printf(buffer_to_read);
-    // mini_exit_string();
-    // mini_exit_io();
-
-    // struct MYFILE *file = mini_fopen("text.txt", 'r');
-    // if (mini_fclose(file) == -1)
-    // {
-    //     mini_printf("\nmini_fclose error\n");
-    // }
-    // else
-    // {
-    //     mini_printf("\nsuccessfully closed file\n");
-    // }
+    char *buffer_to_read = mini_calloc(sizeof(char), sizeof(buffer_to_write));
+    mini_fread(buffer_to_read, sizeof(char), sizeof(buffer_to_write) - 1, rw_file);
+    mini_printf(buffer_to_read);
+    mini_printf("\n");
+    mini_exit_string();
+    mini_exit_io();
+    struct MYFILE *file = mini_fopen("text.txt", 'r');
+    if (mini_fclose(file) == -1)
+    {
+        mini_printf("\nmini_fclose error\n");
+    }
+    else
+    {
+        mini_printf("\nfile closed\n");
+    }
     printf("\n****test_mini_io >>>OK ****\n");
 }
 
